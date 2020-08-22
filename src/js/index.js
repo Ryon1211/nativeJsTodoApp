@@ -18,3 +18,5 @@ window.addEventListener('unload', () => {
 // localstorageに保存できるよにする
 // 入力内容を編集できるようにする
 // フィルターソート
+
+//gitを使用する
