@@ -5,7 +5,7 @@ import { Store } from "./Store.js";
 import { render } from './view/html-util.js';
 
 export class App {
-  constructor({ formElem, inputElem, containerElem, todoItemCountElem }) {
+  constructor({ formElem, inputElem, containerElem, todoItemCountElem, todoDelAll }) {
     this.todoListModel = new TodoListModel();
     this.todoListView = new TodoListView();
     this.store = new Store();
@@ -13,8 +13,11 @@ export class App {
     this.inputElem = inputElem;
     this.containerElem = containerElem;
     this.todoItemCountElem = todoItemCountElem;
+    this.todoDelAll = todoDelAll;
+    // イベントハンドラーをthisでAppにインスタンスに束縛する
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleDeleteAll = this.handleDeleteAll.bind(this);
   }
 
   handleGetData() {
@@ -61,6 +64,10 @@ export class App {
     this.todoListModel.deleteTodo({id});
   }
 
+  handleDeleteAll() {
+    this.todoDelAll.addEventListener("click", this.todoListModel.deleteAllTodo());
+  }
+
   handleSavedData(items) {
     this.todoListModel.addSavedTodo(items);
   }
@@ -69,6 +76,7 @@ export class App {
     this.formElem.addEventListener("submit", this.handleSubmit);
     this.todoListModel.onChange(this.handleChange);
     this.handleSavedData(this.handleGetData());
+    this.todoDelAll.addEventListener("click", this.handleDeleteAll);
   }
 
   unmount(){

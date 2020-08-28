@@ -61,4 +61,9 @@ export class TodoListModel extends EventEmitter {
     });
     this.emitChange();
   }
+
+  deleteAllTodo() {
+    this.items = [];
+    this.emitChange();
+  }
 }
