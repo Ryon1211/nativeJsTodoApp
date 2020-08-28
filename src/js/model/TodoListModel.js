@@ -1,9 +1,21 @@
 import { EventEmitter } from "../EventEmitter.js";
+import {TodoItemModel} from "./TodoItemModel";
 
 export class TodoListModel extends EventEmitter {
   constructor(items = []) {
     super();
     this.items = items;
+  }
+
+  addSavedTodo(items) {
+    if(!items){
+      return;
+    }
+    items.forEach(item => {
+      const title = item.title;
+      const completed = item.completed;
+      this.addTodo(new TodoItemModel({title, completed}));
+    });
   }
 
   getTotalCount() {
